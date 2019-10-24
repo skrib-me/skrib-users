@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -22,15 +23,28 @@ public class UserResource {
         this.userService = userService;
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(
+            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE
+    )
     public ResponseEntity<Void> saveMessage(@RequestBody User user) {
         userService.saveUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @GetMapping(path = "/{id}")
+    @GetMapping(
+            path = "/{id}",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE
+    )
     public ResponseEntity<User> getUser(
             @PathVariable(name = "id") Long id) {
         return ResponseEntity.ok(userService.getUser(id));
+    }
+
+    @GetMapping(
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE
+    )
+    public ResponseEntity<User> getUserByOktaId(
+            @RequestParam(name = "oktaId") String oktaId) {
+        return ResponseEntity.ok(userService.getUserByOktaId(oktaId));
     }
 }

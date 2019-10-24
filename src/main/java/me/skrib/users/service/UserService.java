@@ -13,24 +13,15 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    /**
-     * Save user.
-     *
-     * @param user
-     * @return new user
-     */
     public User saveUser(User user) {
         return userRepository.save(user);
     }
 
-    /**
-     * Get user.
-     *
-     * @param idUser
-     * @return new user
-     */
     public User getUser(Long idUser) {
         return userRepository.findOneById(idUser);
     }
 
+    public User getUserByOktaId(String oktaId) {
+        return userRepository.findOneByOktaId(oktaId);
+    }
 }
