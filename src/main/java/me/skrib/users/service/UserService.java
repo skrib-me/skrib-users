@@ -1,7 +1,7 @@
 package me.skrib.users.service;
 
-import me.skrib.okta.OktaHelper;
-import me.skrib.okta.OktaUserClaims;
+import io.damru.security.web.oauth2.okta.OktaHelper;
+import io.damru.security.web.oauth2.okta.OktaUserClaims;
 import me.skrib.users.model.User;
 import me.skrib.users.model.UserRepository;
 import org.springframework.stereotype.Service;
@@ -23,13 +23,17 @@ public class UserService {
         return userRepository.findOneById(idUser);
     }
 
+    public User getUser(String username) {
+        return userRepository.findOneByUsername(username);
+    }
+
     public User getUserByOktaId(String oktaId) {
         return userRepository.findOneByOktaId(oktaId);
     }
 
     public User me() {
         OktaUserClaims claims = OktaHelper.getUserClaims();
-        User me = userRepository.findOneByOktaId(claims.getUid());
-        return me;
+        return userRepository.findOneByOktaId(claims.getUid());
     }
+
 }
