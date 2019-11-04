@@ -7,3 +7,5 @@ app:
   http:
     cors:
       allowedOrigins: ${CORS_ALLOWED_ORIGINS}
+    security:
+      deny-by-default: false
