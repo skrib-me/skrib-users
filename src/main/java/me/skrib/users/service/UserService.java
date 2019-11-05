@@ -1,7 +1,8 @@
 package me.skrib.users.service;
 
-import io.damru.security.web.oauth2.okta.OktaHelper;
-import io.damru.security.web.oauth2.okta.OktaUserClaims;
+import io.damru.security.web.oauth2.okta.model.OktaHelper;
+import io.damru.security.web.oauth2.okta.model.OktaUserClaims;
+import me.skrib.users.exception.UserNotFoundException;
 import me.skrib.users.model.User;
 import me.skrib.users.model.UserRepository;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,11 @@ public class UserService {
     }
 
     public User getUser(Long idUser) {
-        return userRepository.findOneById(idUser);
+        User user = userRepository.findOneById(idUser);
+        if (user == null) {
+            throw new UserNotFoundException("id", idUser);
+        }
+        return user;
     }
 
     public User getUser(String username) {

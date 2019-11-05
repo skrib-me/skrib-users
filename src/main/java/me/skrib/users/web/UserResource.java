@@ -29,6 +29,23 @@ public class UserResource {
     }
 
     @GetMapping(
+            path = "/{id}",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE
+    )
+    public ResponseEntity<User> getUser(@PathVariable(name = "id") Long id) {
+        return ResponseEntity.ok(userService.getUser(id));
+    }
+
+    @GetMapping(
+            path = "/me",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE
+    )
+//    @PreAuthorize("#oauth2.hasScope('openid')")
+    public ResponseEntity<User> me() {
+        return ResponseEntity.ok(userService.me());
+    }
+
+    @GetMapping(
             path = "/search",
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
@@ -46,22 +63,5 @@ public class UserResource {
         }
         return user != null ? ResponseEntity.ok(user)
                             : ResponseEntity.noContent().build();
-    }
-
-    @GetMapping(
-            path = "/me",
-            produces = MediaType.APPLICATION_JSON_UTF8_VALUE
-    )
-//    @PreAuthorize("#oauth2.hasScope('openid')")
-    public ResponseEntity<User> me() {
-        return ResponseEntity.ok(userService.me());
-    }
-
-    @GetMapping(
-            path = "/{id}",
-            produces = MediaType.APPLICATION_JSON_UTF8_VALUE
-    )
-    public ResponseEntity<User> getUser(@PathVariable(name = "id") Long id) {
-        return ResponseEntity.ok(userService.getUser(id));
     }
 }
