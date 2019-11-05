@@ -30,7 +30,6 @@ public class UserResource {
 
     @GetMapping(
             path = "/search",
-            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
 //    @PreAuthorize("#oauth2.hasScope('me.skrib.users.read')")
